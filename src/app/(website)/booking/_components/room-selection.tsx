@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 
 const disabledRooms = ["68296afbfb46dd41e61a601b", "68296ad8fb46dd41e61a6018"];
 
+const wizerdRoomId = "68296b5cfb46dd41e61a6024";
+
 export default function RoomSelection() {
   const { categoryId, setStep } = useBookingStore();
 
@@ -70,6 +72,16 @@ export default function RoomSelection() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data?.data
           .filter((item) => !disabledRooms.includes(item._id))
+          .map((item) => {
+            if (item._id === wizerdRoomId) {
+              return {
+                ...item,
+                image: "/rooms/wizerd.jpeg",
+              };
+            } else {
+              return item;
+            }
+          })
           .map((room) => (
             <RoomCard key={room._id} room={room} />
           ))}
